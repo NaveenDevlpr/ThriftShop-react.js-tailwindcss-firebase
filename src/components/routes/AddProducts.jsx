@@ -85,29 +85,30 @@ const AddProducts = () => {
     <div className='h-[250px] w-full bg-yellow-100 relative'>
     <img src={'https://media.assettype.com/homegrown%2Fimport%2Fbook%2F12258-wnbiyndoag-1596005069.jpeg?w=1200&auto=format%2Ccompress&fit=max'}
         alt=''
-        className='w-full h-full object-cover'
+        className='object-cover w-full h-full'
         />
         <div className={`absolute inset-0 bg-black/70 opacity-50 w-full h-full`}></div>
         <div className='absolute inset-0 flex items-center justify-center'>
-        <h2 className='text-2xl font-semibold text-yellow-200 tracking-tighter'>Get all your <span className='font-bold  text-orange-300 text-5xl'>Thrifted</span> collections listed here</h2>
+        <h2 className='text-2xl font-semibold tracking-tighter text-yellow-200'>Get all your <span className='text-5xl font-bold text-orange-300'>Thrifted</span> collections listed here</h2>
         </div>
     </div>
     <div className='flex flex-col max-w-xl mx-auto'>
-        <form className='w-full mt-4 flex flex-col space-y-5'
+        <form className='flex flex-col w-full mt-4 space-y-5'
         onSubmit={handleSubmit}
         >
            <div className='flex flex-col space-y-3'>
                 <label>Brand</label>
-                <input type='text' placeholder='Type your brand' className='rounded-md px-4 py-2 ring-1 ring-gray-300 focus:ring-black outline-0 border-0'
+                <input type='text' placeholder='Type your brand' className='px-4 py-2 border-0 rounded-md ring-1 ring-gray-300 focus:ring-black outline-0'
                 value={brandData}
                 onChange={(e)=>{setBrandData(e.target.value)}}
                 />
            </div>
            <div className='flex flex-col space-y-3'>
                 <label>Gender</label>
-                <select className='rounded-md px-4 py-2 ring-1 ring-gray-300 focus:ring-black outline-0 border-0'
+                <select className='px-4 py-2 border-0 rounded-md ring-1 ring-gray-300 focus:ring-black outline-0'
                 onChange={(e)=>setGenderData(e.target.value)}
                 >
+                    <option>select gender</option>
                     {
                         gender.map((e,i)=>{
                             return(
@@ -119,9 +120,10 @@ const AddProducts = () => {
            </div>
            <div className='flex flex-col space-y-3'>
                 <label>Category</label>
-                <select className='rounded-md px-4 py-2 ring-1 ring-gray-300 focus:ring-black outline-0 border-0'
+                <select className='px-4 py-2 border-0 rounded-md ring-1 ring-gray-300 focus:ring-black outline-0'
                 onChange={(e)=>{setCategoryData(e.target.value)}}
                 >
+                    <option>select category</option>
                     {
                         categories.map((e,i)=>{
                             return(
@@ -134,10 +136,11 @@ const AddProducts = () => {
 
            <div className='flex flex-col space-y-3'>
                 <label>Type</label>
-                <select className='rounded-md px-4 py-2 ring-1 ring-gray-300 focus:ring-black outline-0 border-0'
+                <select className='px-4 py-2 border-0 rounded-md ring-1 ring-gray-300 focus:ring-black outline-0'
                 
                 onChange={(e)=>{setTypeData(e.target.value)}}
                 >
+                <option>select type</option>
                     {
                         type.map((e,i)=>{
                             return(
@@ -149,7 +152,7 @@ const AddProducts = () => {
            </div>
            <div className='flex flex-col space-y-3'>
                 <label>Price</label>
-                <input type='number' placeholder='Price your product' className='rounded-md px-4 py-2 ring-1 ring-gray-300 focus:ring-black outline-0 border-0'
+                <input type='number' placeholder='Price your product' className='px-4 py-2 border-0 rounded-md ring-1 ring-gray-300 focus:ring-black outline-0'
                 value={priceData}
                 onChange={(e)=>{setPriceData(e.target.value)}}
                 />
@@ -157,7 +160,7 @@ const AddProducts = () => {
 
            <div className='flex flex-col space-y-3'>
                 <label>Image Upload</label>
-                <input type='file' className='rounded-md px-4 py-2 ring-1 ring-gray-300 focus:ring-black outline-0 border-0'
+                <input type='file' className='px-4 py-2 border-0 rounded-md ring-1 ring-gray-300 focus:ring-black outline-0'
                 onChange={(e)=>{handleImageChange(e)}}
                 multiple
                 />

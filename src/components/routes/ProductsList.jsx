@@ -18,7 +18,8 @@ const ProductsList = ({}) => {
     const [products,setProducts]=useState([])
     const [productImages,setProductImages]=useState([])
 
-
+    const [open,setOpen]=useState(false)
+    
     const getData=async()=>{
         try {
             const productRef = dbRef(db, 'products');
@@ -70,9 +71,9 @@ const ProductsList = ({}) => {
 
 
   return (
-    <div className='w-full p-8 flex flex-col'>
+    <div className='flex flex-col w-full p-8'>
         <div className='flex flex-row items-center justify-between'>
-            <h2 className='text-orange-300 text-4xl font-bold'>{value}<span className='text-xl ml-3 text-black font-medium'> collections</span></h2>
+            <h2 className='text-4xl font-bold text-orange-300'>{value}<span className='ml-3 text-xl font-medium text-black'> collections</span></h2>
             <div className='flex flex-row items-center space-x-2'>
                 <IoIosArrowBack className='w-5 h-5'/>
                
@@ -82,23 +83,35 @@ const ProductsList = ({}) => {
               
             </div>
         </div>
-        <div>
+        <div className='relative'>
             {
                 products ? (
-                    <div className='grid  grid-cols-4 mt-4'>
+                    <div className='grid grid-cols-4 mt-4'>
                     {
                         products.map((e,i)=>{
                             return(
-                                <ProductCard key={i} data={e} img={productImages[productImages.length-i-1]}/>
+                               <div onClick={()=>{setOpen(true)}}>
+                                 <ProductCard key={i} data={e} img={productImages[productImages.length-i-1]} />
+                               </div>
                             )
                         })
                     }
                 </div> 
                 ):(     
-                    <h2 className='text-center text-xl font-medium'>Loading...</h2>
+                    <h2 className='text-xl font-medium text-center'>Loading...</h2>
                 )
             }
         </div>
+        {
+          open &&<div className={`absolute inset-0 bg-black/80 opacity-50 w-full h-full`}></div>
+        }
+        {
+        open && (
+            <div className='absolute w-full bg-gray-200 rounded-tl-[54px] rounded-tr-[54px] shadow-2xl h-[600px] bottom-0 left-0 right-0 p-0'>
+                
+            </div>
+        )
+    }
     </div>
   )
 }
