@@ -1,0 +1,17 @@
+
+import { initializeApp } from "firebase/app";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDhSfGtXDlwUFaOvn9PPiGq7PPzYBoYCsk",
+  authDomain: "thrift-72e1c-aa358.firebaseapp.com",
+  projectId: "thrift-72e1c",
+  storageBucket: "thrift-72e1c.appspot.com",
+  messagingSenderId: "498368509614",
+  databaseURL:"https://thrift-72e1c-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  appId: "1:498368509614:web:cacbf81cda50b28231df3f",
+  measurementId: "G-N99P209EZE"
+};
+
+
+export const app = initializeApp(firebaseConfig);
