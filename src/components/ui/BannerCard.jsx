@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { FiArrowUpRight } from "react-icons/fi";
-
+import { Link } from 'react-router-dom';
 const BannerCard = ({type,src,isActive}) => {
 
    
@@ -12,10 +12,12 @@ const BannerCard = ({type,src,isActive}) => {
             isActive && <div className='absolute bottom-4 right-0 left-0 flex flex-row justify-between items-center p-4'>
             <h2 className='text-white font-semibold text-xl'>{type}</h2>
 
-            <button className='rounded-full bg-blue-900 font-medium text-white flex flex-row items-center px-4 py-[6px]' >
-                <h2 className='font-semibold mb-[2px] text-[14px]'>view all</h2>
-                <FiArrowUpRight className={`w-4 h-4 ml-1 `}/>
-            </button>
+            <Link to={`products/${type}`}>
+                <button className='rounded-full bg-blue-900 font-medium text-white flex flex-row items-center px-4 py-[6px]' >
+                    <h2 className='font-semibold mb-[2px] text-[14px]'>view all</h2>
+                    <FiArrowUpRight className={`w-4 h-4 ml-1 `}/>
+                </button>
+            </Link>
         </div>
         }
         
