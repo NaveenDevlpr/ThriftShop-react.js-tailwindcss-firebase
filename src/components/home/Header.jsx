@@ -10,16 +10,16 @@ const Header = () => {
     
   return (
     <div className='w-full'>
-        <div className='w-full flex flex-row items-end justify-between'>
+        <div className='flex flex-row items-end justify-between w-full'>
             <div className='flex flex-row'>
-                <h2 className='text-4xl text-black font-bold cursor-pointer'>Thrifted.</h2>
+                <h2 className='text-4xl font-bold text-black cursor-pointer'>Thrifted.</h2>
                 <nav className='flex flex-row items-end ml-10'>
                     <ul className='flex flex-row items-center space-x-6'>
                         {
                             navMenus.map((e,i)=>{
                                 return(
                                     <li key={i}
-                                    className='text-md text-gray-400/90 font-normal transition-colors duration-500 cursor-pointer hover:text-gray-600 hover:transition-colors hover:duration-500'
+                                    className='font-normal transition-colors duration-500 cursor-pointer text-md text-gray-400/90 hover:text-gray-600 hover:transition-colors hover:duration-500'
                                     >{e}</li>
                                 )
                             })
@@ -29,9 +29,14 @@ const Header = () => {
             </div>
 
             <div className='flex flex-row space-x-8'>
-                <FaRegHeart className='w-5 h-5 text-gray-400/90 hover:text-black transition-colors duration-500 cursor-pointer hover:transition-colors hover:duration-500'/>
-                <FiShoppingCart className='w-5 h-5 text-gray-400/90 hover:text-black transition-colors duration-500 cursor-pointer hover:transition-colors hover:duration-500'/>
-                <FaRegUser className='w-5 h-5 text-gray-400/90 hover:text-black transition-colors duration-500 cursor-pointer hover:transition-colors hover:duration-500'/>
+                <FaRegHeart className='w-5 h-5 transition-colors duration-500 cursor-pointer text-gray-400/90 hover:text-black hover:transition-colors hover:duration-500'/>
+                <span className='relative'>
+                <FiShoppingCart className='w-5 h-5 transition-colors duration-500 cursor-pointer text-gray-400/90 hover:text-black hover:transition-colors hover:duration-500'/>
+                    <span className='absolute w-3 h-3 bg-red-500 rounded-full -top-2 -right-2 text-white font-semibold text-center text-[8px]'>
+                            2
+                    </span>
+                </span>
+                <FaRegUser className='w-5 h-5 transition-colors duration-500 cursor-pointer text-gray-400/90 hover:text-black hover:transition-colors hover:duration-500'/>
             </div>
         </div>
     </div>
