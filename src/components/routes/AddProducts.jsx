@@ -1,9 +1,8 @@
 import React, { useState,useRef, useEffect } from 'react'
-import {getStorage,uploadBytes,ref} from 'firebase/storage'
-import {getDatabase,ref as databaseRef, push ,set,} from 'firebase/database'
+import {getStorage,uploadBytes,ref, getDownloadURL} from 'firebase/storage'
+import {getDatabase,ref as databaseRef,set,} from 'firebase/database'
 import { app } from '../../firebaseServices'
 import { v4 as uuidv4 } from 'uuid';
-import { ServerValue } from 'firebase/database';
 
 const db=getDatabase(app)
 const storage=getStorage(app)
@@ -137,7 +136,7 @@ const AddProducts = () => {
                     {
                         gender.map((e,i)=>{
                             return(
-                                <option value={e}>{e}</option>
+                                <option key={i} value={e}>{e}</option>
                             )
                         })
                     }
