@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaRegHeart } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
 import {useSelector} from 'react-redux'
 import { selectCartLength } from '../redux/slice/CartSlice';
+import { set } from 'firebase/database';
 const Header = () => {
     const navMenus=['Men','Women','Accessories','About Us']
 
+    const [userMenu,setUserMenu]=useState(false)
+    
     const cartLength=useSelector(selectCartLength)
+
+
+    useEffect(()=>{
+        
+    })
   return (
     <div className='w-full'>
         <div className='flex flex-row items-end justify-between w-full'>
@@ -46,7 +54,16 @@ const Header = () => {
                             </span>
                         </span>
                 </Link>
-                <FaRegUser className='w-5 h-5 transition-colors duration-500 cursor-pointer text-gray-400/90 hover:text-black hover:transition-colors hover:duration-500'/>
+               <span className='relative'>
+               <FaRegUser className='w-5 h-5 transition-colors duration-500 cursor-pointer text-gray-400/90 hover:text-black hover:transition-colors hover:duration-500'
+                onClick={()=>{setUserMenu(!userMenu)}}
+                />
+               </span>
+                {
+                   userMenu && <span className='absolute w-[100px] h-[100px] bg-yellow-200 top-2'>
+                                    
+                               </span>
+                }
             </div>
         </div>
     </div>
