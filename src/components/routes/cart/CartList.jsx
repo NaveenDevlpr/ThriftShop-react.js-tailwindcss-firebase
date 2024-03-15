@@ -14,19 +14,21 @@ const CartList = () => {
     
     const cartItems=useSelector((state)=>state.cart)
     const dispatch=useDispatch()
+    
     const remove=(index)=>{
         dispatch(removeItem(index))
     }
     
     const openModal=(data)=>{
         setOpen(true)
-        const {brand,type,category,price,url}=data
+        const {brand,type,category,price,url,images}=data
 
         const obj={
             brand:brand,
             type:type,
             category:category,
             price:price,
+            images:images
         }
         
         setProductDetails(obj)
@@ -37,10 +39,12 @@ const CartList = () => {
 
         setProductImages(imgObj)
         
+        document.body.classList.add('overflow-hidden')
     }
     const closeModal=()=>{
      
         setOpen(false)
+        document.body.classList.remove('overflow-hidden')
       
       }
   return (
@@ -51,7 +55,7 @@ const CartList = () => {
                 cartItems.length!==0?(
                     cartItems.map((e,i)=>{
                         return(
-                            <div className='w-full h-[250px] flex flex-col px-4  bg-yellow-100/20 ring-1 ring-gray-400/50  overflow-hidden mt-8 relative' key={i}>
+                            <div className='w-full h-[250px] flex flex-col px-4  bg-yellow-100/20 rounded-xl shadow-xl ring-1 ring-gray-400/50  overflow-hidden mt-8 relative' key={i}>
                                   <div className='absolute top-0 left-0 right-0 flex flex-row items-center justify-between w-full px-4 py-2'>
                                         <h2 className='text-xl font-bold'>{i+1}.</h2>  
                                         <IoMdClose className='w-6 h-6 cursor-pointer' onClick={()=>{remove(i)}}/>
@@ -95,11 +99,11 @@ const CartList = () => {
             }
         </div>
         {
-          open &&<div className={`absolute inset-0 bg-black/80 opacity-50 w-full h-full`} onClick={()=>{closeModal()}}></div>
+          open && <div className={`fixed inset-0 bg-black/80 opacity-50 w-full z-50`} onClick={()=>{closeModal()}}></div>
         }
         {
         open && (
-            <div className='fixed w-full bg-gray-100 rounded-tl-[54px] h-[600px] rounded-tr-[54px] shadow-2xl bottom-0 left-0 right-0 p-0'>
+            <div className='fixed w-full bg-gray-100 rounded-tl-[54px] h-[600px] rounded-tr-[54px] shadow-2xl bottom-0 left-0 right-0 p-0 z-50'>
                 <div className="relative flex flex-row items-center w-full h-full mx-auto overflow-x-hidden overflow-y-auto px-[40px] py-[20px]">
                     <ProductDetails productDetail={productDetails} images={productImages} closeModal={closeModal}/>
                 </div>

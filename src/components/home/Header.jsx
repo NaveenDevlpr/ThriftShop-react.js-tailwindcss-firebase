@@ -37,7 +37,6 @@ const Header = () => {
                 setUser(true)
                 const userName=user.email
                 setUsername(userName)
-                console.log(userName)
             }
             else{
                setUser(false)

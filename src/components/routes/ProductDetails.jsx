@@ -1,23 +1,49 @@
 import React, { useState } from 'react'
 import { IoCloseOutline } from "react-icons/io5";
+import { addToCart } from '../redux/slice/CartSlice';
+import {useDispatch,useSelector} from 'react-redux'
+
 const ProductDetails = ({productDetail,images,closeModal}) => {
 
   
-const [currentImage,setCurrentImage]=useState(images.images)
-const [showFullPara, setShowFullPara] = useState(false);
-
 const para=`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
-standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a 
-type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining 
-essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum 
-passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
-
+  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a 
+  type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining 
+  essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum 
+  passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
+  
 
 const truncatedPara = para.split(' ').slice(0, 40).join(' ');
 
 const togglePara = () => {
   setShowFullPara(!showFullPara);
 };
+  
+const [currentImage,setCurrentImage]=useState(images.images)
+const [showFullPara, setShowFullPara] = useState(false);
+
+
+const [cartData,setCartData]=useState({...productDetail,url:currentImage})
+
+
+const dispatch=useDispatch()
+
+const cartProducts=useSelector((state)=>state.cart)
+
+const addCart=()=>{
+  for(let i=0;i<cartProducts.length;i++)
+  {
+      if(cartProducts[i].images===cartData.images)
+      {
+       console.log('already added')
+       return   
+      }
+  }
+ 
+  dispatch(addToCart(cartData))
+}
+
+
   return (
     <>
        
@@ -56,7 +82,7 @@ const togglePara = () => {
                     </div>
                     
                     <div className='flex flex-col mt-10 space-y-6'>
-                        <button className='w-full h-10 text-center text-white bg-black'>
+                        <button className='w-full h-10 text-center text-white bg-black' onClick={()=>addCart()}>
                           Add to cart
                         </button>
 

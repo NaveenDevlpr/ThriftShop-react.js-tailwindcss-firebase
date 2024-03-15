@@ -1,21 +1,32 @@
 import React, { useState } from 'react'
 import { IoMdAdd } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 
 import { addToCart } from '../redux/slice/CartSlice';
 const ProductCard = ({data,img}) => {
 
 
     const [cartData,setCartData]=useState({...data,url:img})
+
+   
     
     const dispatch=useDispatch()
+
+    const cartProducts=useSelector((state)=>state.cart)
    
     
     const addCart=()=>{
+        for(let i=0;i<cartProducts.length;i++)
+        {
+            if(cartProducts[i].images===cartData.images)
+            {
+             console.log('already added')
+             return   
+            }
+        }
        
         dispatch(addToCart(cartData))
-       
     }
   return (
     <>
@@ -44,8 +55,8 @@ const ProductCard = ({data,img}) => {
             
         </div>
         <div className='absolute top-0 right-0 flex flex-col px-4 py-2 space-y-4'>
-            <FaRegHeart className='w-5 h-5 overflow-hidden text-gray-700'/>
-            <IoMdAdd className='w-6 h-6 text-gray-700' onClick={()=>{addCart()}}/>
+            <FaRegHeart className='w-5 h-5 overflow-hidden text-gray-500'/>
+            <IoMdAdd className='w-6 h-6 text-gray-500' onClick={()=>{addCart()}}/>
         </div>
     </div>
 
