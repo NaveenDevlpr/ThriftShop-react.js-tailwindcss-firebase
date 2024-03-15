@@ -8,9 +8,7 @@ import Header from './home/Header'
 const Home = () => {
   return (
     <>
-     <div className='max-w-7xl mx-auto p-4'>
-      <Header/>
-      </div>
+     
         <Banner/>
         <Categories/>
         <About/>
