@@ -41,8 +41,9 @@ const togglePara = () => {
         </div>
         <div className='w-1/3'>
                 <div className='flex flex-col'>
-                    <h2 className='text-[50px] text-black font-bold'>{productDetail.category}</h2>
-                    <div className='flex flex-row items-center justify-between mt-4'>
+                    <h2 className='text-[40px] text-black font-bold'>{productDetail.brand}</h2>
+                    <h2 className='text-[18px] text-gray-600 font-medium'>{productDetail.category}</h2>
+                    <div className='flex flex-row items-center justify-between mt-8'>
                         <h2 className='text-xl text-gray-500 text-medium'>{productDetail.type}</h2>
                         <h2 className='text-xl font-semibold text-black'><span className='font-sans'>₹</span>{productDetail.price}</h2>
                     </div>

@@ -6,6 +6,7 @@ import { app } from '../../firebaseServices';
 import { equalTo, get, getDatabase, orderByChild, query,ref as dbRef, set } from 'firebase/database';
 import ProductCard from '../ui/ProductCard';
 import ProductDetails from './ProductDetails';
+import Loading from '../ui/Loading';
 
 
 
@@ -25,7 +26,10 @@ const ProductsList = () => {
     const [detailProduct,setDetailProduct]=useState([])
     const [detailImage,setDetailImage]=useState([])
     
+
+    const [loading,setLoading]=useState(false)
     const getData=async()=>{
+            setLoading(true)
             const products = [];
             
             const productRef = dbRef(db, 'products');
@@ -46,12 +50,15 @@ const ProductsList = () => {
                
                 }
               });
+              
             } else {
               console.log('No products found.');
             }
             await Promise.all(products.map((product) => getImages(product.images)))
             setProducts(products);
+            setLoading(false)
           } catch (error) {
+            setLoading(false)
             console.error('Error getting data:', error);
           }     
     }
@@ -116,7 +123,7 @@ const ProductsList = () => {
 
 
   return (
-    <div className={`flex flex-col w-full p-8`}>
+    <div className={`flex flex-col w-full p-8 `}>
         <div className='flex flex-row items-center justify-between'>
             <h2 className='text-4xl font-bold text-orange-300'>{value}<span className='ml-3 text-xl font-medium text-black'> collections</span></h2>
             <div className='flex flex-row items-center space-x-2'>
@@ -130,6 +137,13 @@ const ProductsList = () => {
         </div>
         <div className='relative'>
         {
+             loading ? (
+                  <div className='absolute -translate-x-[50%] left-[50%] -translate-y-[50%] top-[50%] max-h-screen'>
+                    <Loading/>
+                  </div>
+             ):
+             (
+             
               products.length !== 0 ? (
                 <div className='grid grid-cols-4 gap-6 mt-4'>
                   {products.map((e, i) => {
@@ -142,12 +156,13 @@ const ProductsList = () => {
                   })}
                 </div>
               ) : (
-                products.length === 0 && (
+                (
                   <h2 className='absolute text-xl font-medium -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
-                    {productImages.length === 0 ?  'No Collection available':'Loading...'}
+                    { 'No Collection available'}
                   </h2>
                 )
               )
+             ) 
           }
         </div>
         {

@@ -2,21 +2,52 @@ import React, { useEffect, useState } from 'react'
 import { FaRegHeart } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
+import { FiLogIn } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
+import { Link,useNavigate } from 'react-router-dom';
 import {useSelector} from 'react-redux'
 import { selectCartLength } from '../redux/slice/CartSlice';
-import { set } from 'firebase/database';
+import { auth } from '../../firebaseServices';
+import {onAuthStateChanged,signOut} from 'firebase/auth'
+
 const Header = () => {
     const navMenus=['Men','Women','Accessories','About Us']
 
     const [userMenu,setUserMenu]=useState(false)
+
+    const [username,setUsername]=useState('')
+    const [user,setUser]=useState(false)
     
     const cartLength=useSelector(selectCartLength)
 
+    const navigate=useNavigate()
+
+    const logout=async()=>{
+        await signOut(auth).then(()=>{
+            navigate('/auth/login')
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }
+
+    const checkUserLoggedIn=async()=>{
+        await auth.onAuthStateChanged((user)=>{
+            if(user)
+            {
+                setUser(true)
+                const userName=user.email
+                setUsername(userName)
+                console.log(userName)
+            }
+            else{
+               setUser(false)
+            }
+        })
+    }
 
     useEffect(()=>{
-        
-    })
+        checkUserLoggedIn()
+    },[])
   return (
     <div className='w-full'>
         <div className='flex flex-row items-end justify-between w-full'>
@@ -60,9 +91,35 @@ const Header = () => {
                 />
                </span>
                 {
-                   userMenu && <span className='absolute w-[100px] h-[100px] bg-yellow-200 top-2'>
-                                    
-                               </span>
+                   userMenu && <div className='p-4 absolute flex flex-col space-y-2 bg-white top-[9%] right-[5%] z-10 rounded-md shadow-xl transition-opacity duration-700 opacity-100'>
+                                    {
+                                    user ? (
+                                          <div className='p-2 cursor-pointer hover:bg-gray-200/60 hover:rounded-xl'>
+                                           <h2 className='text-black text-[16px] font-medium'>{username}</h2>
+                                          </div>
+                                        ):(
+                                            <div className='flex flex-row items-center w-full cursor-pointer' onClick={()=>{navigate('/auth/login')}}>
+                                                <h2 className='text-[16px] font-medium text-black'>login</h2>
+                                                <FiLogIn className='w-6 h-6 ml-2 text-black'/>
+                                            </div>
+                                        )
+                                    }
+                                   {
+                                    user&& <div className='flex flex-col space-y-2'>
+                                                <div className='flex flex-row items-center w-full p-2 cursor-pointer hover:bg-gray-200/60 hover:rounded-xl'
+                                                onClick={()=>{logout()}}
+                                                >
+                                                    <h2 className='text-[16px] font-medium text-black '>logout</h2>
+                                                    <FiLogOut className='w-4 h-4 ml-2 text-black'/>
+                                                </div>
+                                                <h2 className='text-black text-[16px] font-medium cursor-pointer p-2 hover:bg-gray-200/60 hover:rounded-xl'
+                                                onClick={()=>{
+                                                    setUserMenu(!userMenu)
+                                                    navigate('/addProducts')}}
+                                                >Add Products</h2>
+                                            </div>
+                                   }
+                               </div>
                 }
             </div>
         </div>

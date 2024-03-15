@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useRef, useEffect } from 'react'
 import {getStorage,uploadBytes,ref} from 'firebase/storage'
 import {getDatabase,ref as databaseRef, push ,set,} from 'firebase/database'
 import { app } from '../../firebaseServices'
@@ -14,6 +14,8 @@ const AddProducts = () => {
     const type=['Shirts','T-shirts','Accessories','Sneakers','Hoodie','Pants','Sweatshirts']
 
 
+    const [formKey, setFormKey] = useState(0);
+    const formRef = useRef(null);
 
     const [genderData,setGenderData]=useState('')
     const [categoryData,setCategoryData]=useState('')
@@ -22,6 +24,8 @@ const AddProducts = () => {
     const [priceData,setPriceData]=useState('')
     const [images, setImages] = useState([]);
 
+
+    const [added,setAdded]=useState(false)
 
 
     const handleImageChange=(e)=>{
@@ -73,15 +77,34 @@ const AddProducts = () => {
               setPriceData('');
               setImages([]);
 
-              alert('Product added successfully!');
+              setFormKey((prev)=>prev+1)
+              setAdded(true)
+             
           } catch (error) {
             console.error('Error uploading product:', error);
             alert('Failed to add product. Please try again.');            
           }
 
     }
+
+    useEffect(()=>{
+        let timer;
+        timer=setTimeout(()=>{
+          setAdded(false)
+         
+        },4000)
+
+        return () => {
+            clearTimeout(timer);
+        };
+    },[added])
   return (
-    <div className='w-full mb-4'>
+    <div className='relative w-full mb-4'>
+        {
+            added&&<div className='h-[50px] w-full absolute z-10 bg-yellow-200'>
+                <h2 className='text-xl font-semibold text-center text-blue-900'>Your product has been added successfully !!</h2>
+            </div>
+        }
     <div className='h-[250px] w-full bg-yellow-100 relative'>
     <img src={'https://media.assettype.com/homegrown%2Fimport%2Fbook%2F12258-wnbiyndoag-1596005069.jpeg?w=1200&auto=format%2Ccompress&fit=max'}
         alt=''
@@ -95,6 +118,8 @@ const AddProducts = () => {
     <div className='flex flex-col max-w-xl mx-auto'>
         <form className='flex flex-col w-full mt-4 space-y-5'
         onSubmit={handleSubmit}
+        key={formKey}
+        ref={formRef}
         >
            <div className='flex flex-col space-y-3'>
                 <label>Brand</label>
