@@ -22,7 +22,7 @@ const AddProducts = () => {
     const [typeData,setTypeData]=useState('')
     const [priceData,setPriceData]=useState('')
     const [images, setImages] = useState([]);
-
+    const [reviews,setReviews]=useState([])
 
     const [added,setAdded]=useState(false)
 
@@ -60,7 +60,6 @@ const AddProducts = () => {
                 type: typeData,
                 price: priceData,
                 images: uid,
-                reviews:[],
                 createdAt:new Date().toISOString()
 
               };
