@@ -45,12 +45,13 @@ const addCart=()=>{
 
 
   return (
-    <>
+    <div className='flex flex-col w-full h-full  px-[40px] py-[20px] relative'>
        
             <IoCloseOutline className='absolute w-6 h-6 font-bold cursor-pointer right-10 top-5' onClick={closeModal}/>
       
+        <div  className='flex flex-row h-full'>
         <div className='flex flex-row items-start w-2/3 h-full'>
-              <div className='flex flex-col w-1/4 space-y-4'>
+              <div className='flex flex-col w-1/4 space-y-4 '>
                   {
                     images&&images.images.map((e,i)=>{
                       return(
@@ -61,12 +62,12 @@ const addCart=()=>{
                     })
                   }
               </div>
-              <div className='w-2/3 h-full'>
+              <div className='w-2/3 h-full '>
                   <img src={currentImage} alt='' className='object-cover w-full h-full'/>
               </div>
         </div>
-        <div className='w-1/3'>
-                <div className='flex flex-col'>
+        <div className='w-1/3 h-full'>
+                <div className='flex flex-col justify-center h-full'>
                     <h2 className='text-[40px] text-black font-bold'>{productDetail.brand}</h2>
                     <h2 className='text-[18px] text-gray-600 font-medium'>{productDetail.category}</h2>
                     <div className='flex flex-row items-center justify-between mt-8'>
@@ -92,7 +93,30 @@ const addCart=()=>{
                     </div>
                 </div>
         </div>
-    </>
+     
+        </div>
+
+        <div className='flex flex-row w-full mt-4 space-x-10'>
+            <div className='flex flex-col w-1/2 mb-5 space-y-4'>
+                <h2 className='text-xl font-medium text-black'>Write your Review</h2>
+              
+                <form className='flex flex-col'>
+                    <textarea placeholder=''  onChange={() => {}}  className='h-[300px] bg-gray-200/50 rounded-md ring-1 ring-gray-300/90 text-black p-4 focus:outline-none focus:ring-gray-500'/>
+                    <button type='submit' className='px-4 py-2 mt-5 text-white bg-black'>
+                        Add Review
+                    </button>
+                </form>
+            
+            </div>
+
+            <div className='flex flex-col'>
+                <h2 className='text-xl font-medium text-black'>Reviews:</h2>
+                
+            </div>
+    </div>
+        
+   
+  </div>
   )
 }
 

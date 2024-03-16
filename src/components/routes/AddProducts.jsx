@@ -60,6 +60,7 @@ const AddProducts = () => {
                 type: typeData,
                 price: priceData,
                 images: uid,
+                reviews:[],
                 createdAt:new Date().toISOString()
 
               };

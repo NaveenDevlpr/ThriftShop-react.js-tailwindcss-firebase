@@ -170,10 +170,11 @@ const ProductsList = () => {
         }
         {
         open && (
-            <div className='fixed w-full bg-gray-100 rounded-tl-[54px] h-[600px] rounded-tr-[54px] shadow-2xl bottom-0 left-0 right-0 p-0'>
-                <div className="relative flex flex-row items-center w-full h-full mx-auto overflow-x-hidden overflow-y-auto px-[40px] py-[20px]">
-                    <ProductDetails productDetail={detailProduct} images={detailImage} closeModal={closeModal}/>
-                </div>
+            <div className='fixed w-full bg-gray-100 rounded-tl-[54px] h-[600px] rounded-tr-[54px] shadow-2xl bottom-0 left-0 right-0 p-0 overflow-y-auto'>
+              {/*  <div className="relative flex flex-row items-center w-full h-full mx-auto overflow-x-hidden overflow-y-auto px-[40px] py-[20px]">
+                    
+        </div>*/}
+                <ProductDetails productDetail={detailProduct} images={detailImage} closeModal={closeModal}/>
             </div> 
         )
     }
