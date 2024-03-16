@@ -3,7 +3,8 @@ import { IoCloseOutline } from "react-icons/io5";
 import { addToCart } from '../redux/slice/CartSlice';
 import {useDispatch,useSelector} from 'react-redux'
 import { app } from '../../firebaseServices';
-import { getDatabase,push,set,ref as dbRef,get } from 'firebase/database';
+import { getDatabase,push,set,ref as dbRef,get, onValue } from 'firebase/database';
+import Loading from '../ui/Loading';
 
 const db=getDatabase(app)
 const ProductDetails = ({productDetail,images,closeModal}) => {
@@ -30,6 +31,9 @@ const [cartData,setCartData]=useState({...productDetail,url:currentImage})
 
 const [review,setReview]=useState('')
 
+const [displayReviews,setDisplayReviews]=useState()
+
+const [displayReviewLoading,setDisplayReviewLoading]=useState(false)
 
 const dispatch=useDispatch()
 
@@ -50,7 +54,16 @@ const addCart=()=>{
 
 const handleReviewSubmit=async(e)=>{
   e.preventDefault()
-      
+  
+  const currentDate = new Date();
+
+// Get the current date in the format based on the locale
+const formattedDate = currentDate.toLocaleDateString('en-US', {
+  weekday: 'short',
+  year: 'numeric', 
+  month: 'short', 
+  day: 'numeric' 
+});
   const productRef = dbRef(db, `products/${productDetail.images}`);
  
         
@@ -59,21 +72,28 @@ try {
   
   if (snapshot.exists()) 
   {
-  
-
+       
         const product=snapshot.val()
+
+        const reviewObj={
+          review:review,
+          reviewPosted:formattedDate
+        }
        
         const updatedData={
-          ...product,review:[...(product.review || []),review]
+          ...product,review:[...(product.review || []),reviewObj]
         }
 
        
+     
+
         set(productRef,updatedData).then(()=>{
           console.log('submitted')
         }).catch((error)=>{
           console.log("error"+error)
         })
-        
+        //getReviews()
+        setReview('')
       }
  
     
@@ -83,9 +103,48 @@ try {
 }
 }
 
-useEffect(()=>{
+const getReviews=async()=>{
+  setDisplayReviewLoading(true)
+  const productRef = dbRef(db, `products/${productDetail.images}`);
+ 
+        
+  const snapshot = await get(productRef);
   
-},[])
+
+  try {
+    if(snapshot.exists())
+    {
+      const product=snapshot.val()
+
+      
+      const getComments=product.review
+      console.log(getComments)
+
+      setDisplayReviews(getComments)
+      setDisplayReviewLoading(false)
+    }
+  } catch (error) {
+    console.log("error"+error)
+    setDisplayReviewLoading(false)
+  }
+  
+}
+
+useEffect(()=>{
+  getReviews()
+
+  const productRef = dbRef(db, `products/${productDetail.images}`);
+    const unsubscribe = onValue(productRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const product = snapshot.val();
+        const reviews = product.review || [];
+        setDisplayReviews(reviews);
+      }
+    });
+    
+    return () => unsubscribe();
+},[productDetail])
+
 
   return (
     <div className='flex flex-col w-full h-full  px-[40px] py-[20px] relative'>
@@ -153,9 +212,31 @@ useEffect(()=>{
             
             </div>
 
-            <div className='flex flex-col'>
+            <div className='flex flex-col w-1/2 '>
                 <h2 className='text-xl font-medium text-black'>Reviews:</h2>
-                
+                <div className='flex flex-col mt-4 space-y-8'>
+                  {
+                    displayReviewLoading ? (
+                      <Loading />
+                    ):(
+                      displayReviews&&displayReviews.length!==0 ? (
+                          displayReviews.map((e,i)=>{
+                            return(
+                             <div key={i} className='flex flex-col '>
+                                <div className='flex flex-row items-center justify-between'>
+                                    <h2 className='text-[14px] text-gray-400 font-medium'>'Name</h2>
+                                    <h2 className='text-[14px] text-gray-600 font-medium'>{e.reviewPosted}</h2>
+                                </div>
+                                <h2 className='text-[16px] text-black font-semibold'>{e.review}</h2>
+                             </div>
+                            )
+                          })
+                        ):(
+                        <h2 className='text-black text-[16px] text-center'>No reviews received yet</h2>
+                      )
+                    )
+                  }
+                </div>
             </div>
     </div>
         
