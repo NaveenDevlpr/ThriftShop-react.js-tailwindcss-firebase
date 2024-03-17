@@ -61,6 +61,7 @@ const Header = () => {
                                 return(
                                     <li key={i}
                                     className='font-normal transition-colors duration-500 cursor-pointer text-md text-gray-400/90 hover:text-gray-600 hover:transition-colors hover:duration-500'
+                                    onClick={()=>{navigate(`/products/gender/${e}`)}}
                                     >{e}</li>
                                 )
                             })

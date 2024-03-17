@@ -50,6 +50,9 @@ const ProductsList = () => {
                   products.push(product);
                
                 }
+                else if(value==='all'){
+                  products.push(product)
+                }
               });
               
             } else {

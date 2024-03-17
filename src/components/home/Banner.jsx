@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-
+import {useNavigate} from 'react-router-dom'
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -18,6 +18,9 @@ import BannerCard from '../ui/BannerCard';
 
 
 const Banner = () => {
+
+
+  const navigate=useNavigate()
 
     const [bannerData,setBannerData]=useState(['Accessories','Pants','T-shirts','Shirts','Sneakers','Sweatshirts','Hoodie'])
    
@@ -40,11 +43,11 @@ const Banner = () => {
         setActiveIndex(swiper.activeIndex);
       };
   return (
-    <section className="p-4 lg:mx-auto max-w-5xl">
-        <div className='flex flex-row space-x-5 items-stretch'>
+    <section className="max-w-5xl p-4 lg:mx-auto">
+        <div className='flex flex-row items-stretch space-x-5'>
             <div className='flex'>
                 <h2 className='uppercase text-[60px] text-black font-bold'>Perfect fashion style <br></br>for <div className='inline-block w-[100px] h-12 bg-black rounded-full'>
-                    <img src='https://graziamagazine.com/us/wp-content/uploads/sites/15/2024/01/vintage-treasures-unearthing-unique-wide-leg-jeans-at-thrift-stores-5.jpg' alt='' className='w-full h-full object-cover rounded-full'/>
+                    <img src='https://graziamagazine.com/us/wp-content/uploads/sites/15/2024/01/vintage-treasures-unearthing-unique-wide-leg-jeans-at-thrift-stores-5.jpg' alt='' className='object-cover w-full h-full rounded-full'/>
                     </div> your self
                 <div className='inline-block w-[140px] h-12 ml-4'><p className='text-[6px] font-light pr-2 flex-shrink'>Fashion encompasses clothing, accessories, and even behaviours, reflecting culture and individuality. Fashion evolves continuously, driven by designers, influencers, and changing norms.</p></div>
                 </h2>
@@ -52,13 +55,13 @@ const Banner = () => {
             <div className='rounded-xl w-[100px] flex flex-grow flex-row items-center justify-center relative'>
                <img src='https://nypost.com/wp-content/uploads/sites/2/2022/04/vintage.png?resize=878,585'
                alt=''
-               className='object-cover h-full w-full rounded-xl'
+               className='object-cover w-full h-full rounded-xl'
                ></img>
                 <div className={`absolute inset-0 bg-black/50 opacity-50 w-full h-full rounded-xl `}></div>
                 <div className='absolute inset-0 flex flex-col items-center justify-center p-4'>
                     <h2 className='text-[20px] font-bold text-yellow-200 text-center'>JOIN THE THRIFT REVOLUTION</h2>
                     <p className='text-[10px] text-yellow-100 text-center mt-4'>Get Popular Brands At Unbeatable Price. Start Thrifting @ under RS. 499</p>
-                    <button className='rounded-full bg-blue-900 font-medium text-white flex flex-row items-center px-5 py-[5px] mt-4' >
+                    <button className='rounded-full bg-blue-900 font-medium text-white flex flex-row items-center px-5 py-[5px] mt-4' onClick={()=>{navigate('/products/type/all')}} >
                         <h2 className='text-center font-semibold text-[12px] mb-[2px]'>shop</h2>
                      </button>
                 </div>
