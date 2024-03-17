@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import { IoIosArrowBack } from "react-icons/io";
 import { getStorage,listAll, getDownloadURL,ref as stRef, list } from 'firebase/storage';
 import { app } from '../../firebaseServices';
@@ -14,6 +14,7 @@ const db=getDatabase(app)
 const storage=getStorage(app)
 const ProductsList = () => {
 
+  const navigate=useNavigate()
     const {field,value}=useParams()
 
 
@@ -127,9 +128,9 @@ const ProductsList = () => {
         <div className='flex flex-row items-center justify-between'>
             <h2 className='text-4xl font-bold text-orange-300'>{value}<span className='ml-3 text-xl font-medium text-black'> collections</span></h2>
             <div className='flex flex-row items-center space-x-2'>
-                <IoIosArrowBack className='w-5 h-5'/>
+                <IoIosArrowBack className='w-5 h-5 cursor-pointer' onClick={()=>{navigate(-1)}}/>
                
-                <h2>
+                <h2 onClick={()=>{navigate(-1)}}>
                     back
                 </h2>
               
