@@ -5,6 +5,8 @@ import {useDispatch,useSelector} from 'react-redux'
 import { app } from '../../firebaseServices';
 import { getDatabase,push,set,ref as dbRef,get, onValue } from 'firebase/database';
 import Loading from '../ui/Loading';
+import { GrFormPrevious } from "react-icons/gr";
+import { GrFormNext } from "react-icons/gr";
 
 const db=getDatabase(app)
 const ProductDetails = ({productDetail,images,closeModal}) => {
@@ -38,6 +40,9 @@ const [displayReviewLoading,setDisplayReviewLoading]=useState(false)
 const dispatch=useDispatch()
 
 const cartProducts=useSelector((state)=>state.cart)
+
+const [noOfReviews,setNoofReviews]=useState(4)
+const [pageNumber,setPageNumber]=useState(1)
 
 const addCart=()=>{
   for(let i=0;i<cartProducts.length;i++)
@@ -118,7 +123,7 @@ const getReviews=async()=>{
 
       
       const getComments=product.review
-      console.log(getComments)
+      
 
       setDisplayReviews(getComments)
       setDisplayReviewLoading(false)
@@ -128,6 +133,21 @@ const getReviews=async()=>{
     setDisplayReviewLoading(false)
   }
   
+}
+
+const selectPageHandler=(index)=>{
+  
+  console.log(displayReviewLoading.length)
+  if(index>=1 && index <= Math.ceil(displayReviews.length/noOfReviews) && index!==pageNumber)
+  {
+    
+    console.log(index)
+    setPageNumber(index)
+  }
+  else{
+    console.log('no')
+  }
+
 }
 
 useEffect(()=>{
@@ -212,7 +232,7 @@ useEffect(()=>{
             
             </div>
 
-            <div className='flex flex-col w-1/2 '>
+            <div className='flex flex-col w-1/2'>
                 <h2 className='text-xl font-medium text-black'>Reviews:</h2>
                 <div className='flex flex-col mt-4 space-y-8'>
                   {
@@ -220,7 +240,7 @@ useEffect(()=>{
                       <Loading />
                     ):(
                       displayReviews&&displayReviews.length!==0 ? (
-                          displayReviews.map((e,i)=>{
+                          displayReviews.slice(pageNumber*noOfReviews-noOfReviews,noOfReviews*pageNumber).map((e,i)=>{
                             return(
                              <div key={i} className='flex flex-col '>
                                 <div className='flex flex-row items-center justify-between'>
@@ -237,6 +257,20 @@ useEffect(()=>{
                     )
                   }
                 </div>
+               {
+                  displayReviews&&
+                  <div className='flex flex-row items-center justify-center w-full mt-2'>
+                    <span className='p-2' ><GrFormPrevious className='w-5 h-5 cursor-pointer' onClick={()=>{selectPageHandler(pageNumber-1)}}/></span>
+                    { 
+                    [...Array(Math.ceil(displayReviews.length/noOfReviews))].map((e,i)=>{
+                      return(
+                        <span key={i} className={`p-3 rounded-md ${pageNumber===i+1?'bg-yellow-200 text-blue-900':''}cursor-pointer`} onClick={()=>{selectPageHandler(i+1)}}>{i+1}</span>
+                      )
+                    })
+                    }
+                    <span className='p-2' ><GrFormNext className='w-5 h-5 cursor-pointer' onClick={()=>selectPageHandler(pageNumber+1)}/></span>
+                  </div>
+                }
             </div>
     </div>
         
