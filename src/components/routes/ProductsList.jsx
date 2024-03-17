@@ -8,7 +8,8 @@ import ProductCard from '../ui/ProductCard';
 import ProductDetails from './ProductDetails';
 import Loading from '../ui/Loading';
 
-
+import { GrFormPrevious } from "react-icons/gr";
+import { GrFormNext } from "react-icons/gr";
 
 const db=getDatabase(app)
 const storage=getStorage(app)
@@ -17,6 +18,8 @@ const ProductsList = () => {
   const navigate=useNavigate()
     const {field,value}=useParams()
 
+    const [noOfProducts,setNoOfProducts]=useState(8)
+    const [pageNumber,setPageNumber]=useState(1)
 
     const [products,setProducts]=useState([])
     const [productImages,setProductImages]=useState([])
@@ -118,6 +121,21 @@ const ProductsList = () => {
     }
 
     
+    const selectPageHandler=(index)=>{
+  
+      
+      if(index>=1 && index <= Math.ceil(products.length/noOfProducts) && index!==pageNumber)
+      {
+        
+        console.log(index)
+        setPageNumber(index)
+      }
+      else{
+        console.log('no')
+      }
+    
+    }
+
     useEffect(()=>{
     
        getData()
@@ -133,7 +151,7 @@ const ProductsList = () => {
             <div className='flex flex-row items-center space-x-2'>
                 <IoIosArrowBack className='w-5 h-5 cursor-pointer' onClick={()=>{navigate(-1)}}/>
                
-                <h2 onClick={()=>{navigate(-1)}}>
+                <h2 className='cursor-pointer' onClick={()=>{navigate(-1)}}>
                     back
                 </h2>
               
@@ -150,7 +168,7 @@ const ProductsList = () => {
              
               products.length !== 0 ? (
                 <div className='grid grid-cols-4 gap-6 mt-4'>
-                  {products.map((e, i) => {
+                  {products.slice(pageNumber*noOfProducts-noOfProducts,pageNumber*noOfProducts).map((e, i) => {
                     const imageObj = productImages.find((image) => image.id === e.images);
                     return (
                       <div onClick={() => openModal(i)} key={i}>
@@ -181,6 +199,25 @@ const ProductsList = () => {
                 <ProductDetails productDetail={detailProduct} images={detailImage} closeModal={closeModal}/>
             </div> 
         )
+    }
+
+    {
+      products.length>0&&
+      <div className='mt-5'>
+        {
+              <div className='flex flex-row items-center justify-center w-full mt-2'>
+              <span className='p-2' ><GrFormPrevious className='w-5 h-5 cursor-pointer' onClick={()=>{selectPageHandler(pageNumber-1)}}/></span>
+              { 
+              [...Array(Math.ceil(products.length/noOfProducts))].map((e,i)=>{
+                return(
+                  <span key={i} className={`py-2 px-4  ${pageNumber===i+1?'bg-yellow-100 ring-1 ring-black text-blue-900 font-semibold':''}cursor-pointer`} onClick={()=>{selectPageHandler(i+1)}}>{i+1}</span>
+                )
+              })
+              }
+              <span className='p-2' ><GrFormNext className='w-5 h-5 cursor-pointer' onClick={()=>selectPageHandler(pageNumber+1)}/></span>
+              </div>
+        }
+      </div>
     }
     </div>
   )

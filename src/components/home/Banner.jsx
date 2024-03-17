@@ -43,16 +43,16 @@ const Banner = () => {
         setActiveIndex(swiper.activeIndex);
       };
   return (
-    <section className="max-w-5xl p-4 lg:mx-auto">
-        <div className='flex flex-row items-stretch space-x-5'>
-            <div className='flex'>
-                <h2 className='uppercase text-[60px] text-black font-bold'>Perfect fashion style <br></br>for <div className='inline-block w-[100px] h-12 bg-black rounded-full'>
+    <section className="w-full lg:max-w-5xl p-4 mx-auto">
+        <div className='flex flex-col lg:flex-row items-center lg:items-stretch lg:space-x-5 justify-center'>
+            <div className='flex max-md:flex-row max-md:w-full items-center justify-center'>
+                <h2 className='uppercase max-md:text-[40px] md:text-[50px] lg:text-[60px] text-black font-bold'>Perfect fashion style <br></br>for <div className='inline-block w-[100px] h-12 bg-black rounded-full'>
                     <img src='https://graziamagazine.com/us/wp-content/uploads/sites/15/2024/01/vintage-treasures-unearthing-unique-wide-leg-jeans-at-thrift-stores-5.jpg' alt='' className='object-cover w-full h-full rounded-full'/>
                     </div> your self
-                <div className='inline-block w-[140px] h-12 ml-4'><p className='text-[6px] font-light pr-2 flex-shrink'>Fashion encompasses clothing, accessories, and even behaviours, reflecting culture and individuality. Fashion evolves continuously, driven by designers, influencers, and changing norms.</p></div>
+                <div className='inline-block md:w-[120px] lg:w-[140px] max-md:h-8 md:h-10 lg:h-12 ml-4'><p className='text-[4px] md:text-[5px] lg:text-[6px] font-light pr-2 lg:flex-shrink'>Fashion encompasses clothing, accessories, and even behaviours, reflecting culture and individuality. Fashion evolves continuously, driven by designers, influencers, and changing norms.</p></div>
                 </h2>
             </div>
-            <div className='rounded-xl w-[100px] flex flex-grow flex-row items-center justify-center relative'>
+            <div className='rounded-xl w-full max-lg:h-1/2 lg:w-[100px] flex flex-grow flex-row items-center justify-center relative'>
                <img src='https://nypost.com/wp-content/uploads/sites/2/2022/04/vintage.png?resize=878,585'
                alt=''
                className='object-cover w-full h-full rounded-xl'
